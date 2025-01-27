@@ -1,5 +1,5 @@
 
-27-1-2025 28 tết atta tỵ
+27-1-2025 28 tết ất tỵ
 
 https://web.stanford.edu/class/cs109/
 

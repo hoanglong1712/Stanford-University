@@ -1,5 +1,5 @@
 #  Programming Assignment 6 - Neural Networks
-  
+  youtube: https://www.youtube.com/watch?v=nAotiFKFQdY&list=PLIpLw6v7Z1qkO4F4COirfwGAwap3YWQkq&index=110
 # # Getting the Assignment
   
 ### macOS/Ubuntu for Windows/Linux

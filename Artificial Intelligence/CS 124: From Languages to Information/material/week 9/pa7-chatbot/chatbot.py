@@ -218,7 +218,33 @@ class Chatbot:
         pre-processed with preprocess()
         :returns: a numerical value for the sentiment of the text
         """
-        return 0
+        titles = self.extract_titles(preprocessed_input)
+        tmp = preprocessed_input.copy()         
+        for title in titles:
+            tmp = tmp.replace(
+                f'"{title}"', ' '
+            )
+            pass
+        sp = tmp.split(' ')
+        value = 0
+        for item in sp:
+            currentSentiment = self.sentiment[item]
+            if currentSentiment is not None:
+                if currentSentiment == 'pos':
+                    value += 1
+                    pass
+                elif currentSentiment == 'neg':
+                    value -= 1
+                    pass
+                pass
+            pass   
+        if value > 0:
+            value = 1
+            pass 
+        elif value < 0:
+            value = -1
+            pass
+        return value
 
     ############################################################################
     # 3. Movie Recommendation helper functions                                 #

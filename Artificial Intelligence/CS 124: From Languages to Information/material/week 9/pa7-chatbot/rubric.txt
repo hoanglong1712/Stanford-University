@@ -1,0 +1,30 @@
+#########################################################################################
+# TODO: Fill this template out in addition to the code implementation in chatbot.py!    #
+#                                                                                       #
+# Each "Creative" feature in the rubric has a section below.                            #
+# For every feature you chose to implement, replace the "NO" at the end of the relevant #
+# lines with "YES".                                                                     #
+#                                                                                       #
+# You will only receive credit for the features you mark as YES below!                  #
+#########################################################################################
+
+FEATURE - [LLM] Communicating Sentiment and Movie Extraction: NO
+FEATURE - [LLM] Staying Focused on Movies: NO
+FEATURE - [LLM] Giving Recommendations after 5 Data Points: NO
+FEATURE - [LLM PROGRAMMING] Find Foreign Movie Title: NO
+FEATURE - [LLM PROGRAMMING] Extracting Emotion from User Input: NO
+FEATURE - [LLM PROGRAMMING] Responding to Arbitrary User Input: NO
+FEATURE - [LLM PROGRAMMING] Responding Appropriately to User Emotion: NO
+FEATURE - [LLM PROGRAMMING] Chatbot Theme/Persona: NO
+Did not implement any of the above features: YES
+
+#########################################################################################
+# Team Contributions                                                                    #
+#########################################################################################
+We did cool stuff!
+
+#########################################################################################
+# Optional: Feel free to include anything else that you want us to know about your      #
+# implementation!                                                                       #
+#########################################################################################
+(optional) If you have anything else you want to add, delete this and type it here!

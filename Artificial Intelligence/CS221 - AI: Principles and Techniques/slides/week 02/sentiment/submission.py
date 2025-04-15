@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+import math
 import random
 from typing import Callable, Dict, List, Tuple, TypeVar
 
@@ -8,6 +8,7 @@ from util import *
 FeatureVector = Dict[str, int]
 WeightVector = Dict[str, float]
 Example = Tuple[FeatureVector, int]
+
 
 ############################################################
 # Problem 3: binary classification
@@ -25,7 +26,7 @@ def extractWordFeatures(x: str) -> FeatureVector:
     Example: "I am what I am" --> {'I': 2, 'am': 2, 'what': 1}
     """
     # BEGIN_YOUR_CODE (our solution is 4 lines of code, but don't worry if you deviate from this)
-    #raise Exception("Not implemented yet")
+    # raise Exception("Not implemented yet")
     words = x.split(' ')
     word_features = {}
     for word in words:
@@ -62,10 +63,11 @@ def learnPredictor(trainExamples: List[Tuple[T, int]],
     weights = {}  # feature => weight
 
     # BEGIN_YOUR_CODE (our solution is 13 lines of code, but don't worry if you deviate from this)
-    #raise Exception("Not implemented yet")
-    def hinge_loss(featuresVector : {}, y: float, w: {}):
+    # raise Exception("Not implemented yet")
+    def hinge_loss(featuresVector: {}, y: float, w: {}):
         margin = y * dotProduct(featuresVector, w)
         return max(0, 1 - margin)
+
     for epoch in range(numEpochs):
         for x, y in trainExamples:
             features = featureExtractor(x)
@@ -83,7 +85,7 @@ def learnPredictor(trainExamples: List[Tuple[T, int]],
         # Predict +1 for score >= 0, otherwise -1
         return 1 if score >= 0 else -1
 
-    #print(evaluatePredictor(trainExamples, predictor))
+    # print(evaluatePredictor(trainExamples, predictor))
     # END_YOUR_CODE
     return weights
 
@@ -109,8 +111,8 @@ def generateDataset(numExamples: int, weights: WeightVector) -> List[Example]:
     # Note that the weight vector can be arbitrary during testing.
     def generateExample() -> Tuple[Dict[str, int], int]:
         # BEGIN_YOUR_CODE (our solution is 3 lines of code, but don't worry if you deviate from this)
-        #raise Exception("Not implemented yet")
-        phi = { feature: random.randint(0, 10) for feature in weights.keys()}
+        # raise Exception("Not implemented yet")
+        phi = {feature: random.randint(0, 10) for feature in weights.keys()}
         score = dotProduct(phi, weights)
         y = 1 if score <= 0 else -1
         # END_YOUR_CODE
@@ -130,14 +132,15 @@ def extractCharacterFeatures(n: int) -> Callable[[str], FeatureVector]:
     EXAMPLE: (n = 3) "I like tacos" --> {'Ili': 1, 'lik': 1, 'ike': 1, ...
     You may assume that 1 <= n <= len(x).
     '''
+
     def extract(x: str) -> Dict[str, int]:
         # BEGIN_YOUR_CODE (our solution is 6 lines of code, but don't worry if you deviate from this)
-        #raise Exception("Not implemented yet")
+        # raise Exception("Not implemented yet")
         text = x.replace(" ", "").replace("\t", "")
         i = 0
         features = {}
         while i + n < len(text):
-            ngram = text[i:i+n]
+            ngram = text[i:i + n]
             features[ngram] = features.get(ngram, 0) + 1
             i += 1
             pass
@@ -151,31 +154,6 @@ def extractCharacterFeatures(n: int) -> Callable[[str], FeatureVector]:
 # Problem 3e:
 
 
-def testValuesOfN(n: int):
-    '''
-    Use this code to test different values of n for extractCharacterFeatures
-    This code is exclusively for testing.
-    Your full written solution for this problem must be in sentiment.pdf.
-    '''
-    trainExamples = readExamples('polarity.train')
-    validationExamples = readExamples('polarity.dev')
-    featureExtractor = extractCharacterFeatures(n)
-    weights = learnPredictor(trainExamples,
-                             validationExamples,
-                             featureExtractor,
-                             numEpochs=20,
-                             eta=0.01)
-    outputWeights(weights, 'weights')
-    outputErrorAnalysis(validationExamples, featureExtractor, weights,
-                        'error-analysis')  # Use this to debug
-    trainError = evaluatePredictor(
-        trainExamples, lambda x:
-        (1 if dotProduct(featureExtractor(x), weights) >= 0 else -1))
-    validationError = evaluatePredictor(
-        validationExamples, lambda x:
-        (1 if dotProduct(featureExtractor(x), weights) >= 0 else -1))
-    print(("Official: train error = %s, validation error = %s" %
-           (trainError, validationError)))
 
 
 ############################################################
@@ -183,20 +161,81 @@ def testValuesOfN(n: int):
 ############################################################
 
 
-
-
 def kmeans(examples: List[Dict[str, float]], K: int,
            maxEpochs: int) -> Tuple[List, List, float]:
     '''
     Perform K-means clustering on |examples|, where each example is a sparse feature vector.
 
-    examples: list of examples, each example is a string-to-float dict representing a sparse vector.
+    examples: list of examples, each example is a string-to-float dict
+    representing a sparse vector.
     K: number of desired clusters. Assume that 0 < K <= |examples|.
-    maxEpochs: maximum number of epochs to run (you should terminate early if the algorithm converges).
+    maxEpochs: maximum number of epochs to run
+    (you should terminate early if the algorithm converges).
     Return: (length K list of cluster centroids,
-            list of assignments (i.e. if examples[i] belongs to centers[j], then assignments[i] = j),
+            list of assignments (i.e. if examples[i] belongs to centers[j],
+            then assignments[i] = j),
             final reconstruction loss)
     '''
     # BEGIN_YOUR_CODE (our solution is 28 lines of code, but don't worry if you deviate from this)
-    raise Exception("Not implemented yet")
+    # raise Exception("Not implemented yet")
+    centers = []
+    assignments = []
+    totalCost = 0
+
+    centers = [examples[random.randint(0, len(examples) - 1)]
+               for k in range(K)]
+
+    def dist(x, center):
+        return math.sqrt(sum([(x[key] - center[key]) ** 2 for key in x.keys()]))
+
+    for epoch in range(maxEpochs):
+        totalCost = 0
+        assignments = []
+        for example in examples:
+            chosen_center = 0
+            best_dist = None
+            j = 0
+            for center in centers:
+                curr_dist = dist(example, center)
+                if best_dist is None or curr_dist < best_dist:
+                    chosen_center = j
+                    best_dist = curr_dist
+                    totalCost += best_dist
+                    pass
+                j += 1
+                pass
+            assignments.append(chosen_center)
+            pass
+
+        old_center = [item for item in centers]
+        centers = []
+        for i in range(K):
+            arr = []
+            for j in range(len(assignments)):
+                if assignments[j] == i:
+                    arr.append(examples[j])
+                    pass
+                pass
+            center = {}
+            for key in arr[0].keys():
+                center[key] = sum([item.get(key) for item in arr]) / len(arr)
+                pass
+            centers.append(center)
+            pass
+        if all([dist(centers[i], old_center[i]) < 1e-6 for i in range(K)]):
+            break
+        pass
+
+    return centers, assignments, totalCost
     # END_YOUR_CODE
+
+x1 = {'good':0, 'bad':0}
+x2 = {'good':0, 'bad':1}
+x3 = {'good':0, 'bad':2}
+x4 = {'good':0, 'bad':3}
+x5 = {'good':0, 'bad':4}
+x6 = {'good':0, 'bad':5}
+examples = [x1, x2, x3, x4, x5, x6]
+centers, assignments, totalCost = kmeans(examples, 2, maxEpochs=10)
+
+print(centers, assignments, totalCost)

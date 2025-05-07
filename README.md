@@ -10,3 +10,5 @@ https://datasciencemajor.stanford.edu/academics/undergraduate-bs-program/bs-degr
 
 https://www.cs.stanford.edu/bachelors/cs-minor
 
+https://www.cs.stanford.edu/bs-tracks-program-sheets
+
